@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lake Erie Poker Classic</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #000; color: #fff; }
+        header { background: #000; border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 100; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; }
+        .logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .logo-icon { width: 40px; height: 40px; background: #dc2626; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .logo-text h1 { font-size: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .logo-text p { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1.5px; }
+        nav { display: flex; gap: 8px; }
+        nav button { background: none; border: none; color: #fff; padding: 8px 20px; font-weight: bold; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; cursor: pointer; transition: color 0.3s; }
+        nav button:hover { color: #dc2626; }
+        nav button.active { color: #dc2626; }
+        .hero { background: linear-gradient(to bottom right, rgba(127, 29, 29, 0.2), #000, #000); padding: 128px 24px; text-align: center; }
+        .hero h2 { font-size: 64px; font-weight: bold; margin-bottom: 16px; letter-spacing: -1px; }
+        .hero p { font-size: 32px; color: #d1d5db; margin-bottom: 8px; font-weight: 300; }
+        .hero .tagline { font-size: 28px; color: #dc2626; font-weight: 600; margin-bottom: 32px; }
+        .btn { background: #dc2626; color: #fff; border: none; padding: 16px 40px; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: background 0.3s; }
+        .btn:hover { background: #b91c1c; }
+        .events-section { background: #171717; padding: 64px 24px; }
+        .events-section h2 { font-size: 40px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 48px; }
+        .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 32px; }
+        .event-card { background: #000; border: 2px solid #262626; padding: 32px; transition: border-color 0.3s; }
+        .event-card:hover { border-color: #dc2626; }
+        .event-card h3 { font-size: 24px; font-weight: bold; color: #dc2626; text-transform: uppercase; margin-bottom: 8px; }
+        .event-info { color: #9ca3af; margin-bottom: 16px; }
+        .event-info .buyin { font-size: 28px; font-weight: bold; color: #fff; margin-top: 4px; }
+        .event-card p { color: #d1d5db; line-height: 1.6; margin-bottom: 16px; }
+        .event-prize { color: #dc2626; font-weight: 600; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; }
+        .gallery { background: #000; padding: 64px 24px; overflow: hidden; }
+        .gallery h2 { font-size: 40px; font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 32px; }
+        .gallery-scroll { display: flex; gap: 24px; animation: scroll 30s linear infinite; }
+        .gallery-scroll:hover { animation-play-state: paused; }
+        .gallery-item { flex-shrink: 0; width: 320px; height: 256px; position: relative; cursor: pointer; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; border: 2px solid #262626; transition: border-color 0.3s; }
+        .gallery-item:hover img { border-color: #dc2626; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        footer { background: #000; border-top: 1px solid #262626; padding: 48px 24px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 40px; }
+        .footer-section h3 { font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #dc2626; margin-bottom: 16px; }
+        .footer-section p { color: #9ca3af; line-height: 1.6; }
+        .footer-bottom { border-top: 1px solid #262626; padding-top: 32px; text-align: center; color: #666; font-size: 14px; }
+        .page { display: none; }
+        .page.active { display: block; }
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 40px; }
+            .hero p { font-size: 24px; }
+            .events-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="showPage('home')">
+                    <div class="logo-icon">♠</div>
+                    <div class="logo-text">
+                        <h1>Lake Erie Poker Classic</h1>
+                        <p>Premier Tournament Series</p>
+                    </div>
+                </div>
+                <nav>
+                    <button onclick="showPage('home')" class="active" id="nav-home">Home</button>
+                    <button onclick="showPage('schedule')" id="nav-schedule">Schedule</button>
+                    <button onclick="showPage('events')" id="nav-events">Events</button>
+                    <button onclick="showPage('info')" id="nav-info">Player Info</button>
+                    <button onclick="showPage('contact')" id="nav-contact">Contact</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div id="home" class="page active">
+        <div class="hero">
+            <div class="container">
+                <h2>LAKE ERIE POKER CLASSIC</h2>
+                <p>Game faces on.</p>
+                <p class="tagline">The action starts here.</p>
+                <button class="btn" onclick="showPage('schedule')">View Schedule →</button>
+            </div>
+        </div>
+
+        <div class="events-section">
+            <div class="container">
+                <h2>Upcoming Events</h2>
+                <div class="events-grid">
+                    <div class="event-card">
+                        <h3>Lake Erie Poker Classic Main Event</h3>
+                        <div class="event-info">
+                            <div>March 15, 2026 at 12:00 PM</div>
+                            <div class="buyin">$1,100</div>
+                        </div>
+                        <p>The flagship tournament of the Lake Erie Poker Classic series. Join us for three days of premium tournament poker action.</p>
+                        <div class="event-prize">$100,000 Guaranteed Prize Pool</div>
+                    </div>
+                    <div class="event-card">
+                        <h3>Mystery Bounty Tournament</h3>
+                        <div class="event-info">
+                            <div>March 16, 2026 at 2:00 PM</div>
+                            <div class="buyin">$550</div>
+                        </div>
+                        <p>Every knockout reveals a mystery bounty prize. Action-packed format with exciting prize potential.</p>
+                        <div class="event-prize">Details Coming Soon</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery">
+            <div class="container">
+                <h2>Tournament Gallery</h2>
+            </div>
+            <div class="gallery-scroll">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=400" alt="Poker"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=400" alt="Poker"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1596838132731-3301c3fd4317?w=400" alt="Poker"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1518990031154-99b76e1e9371?w=400" alt="Poker"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=400" alt="Poker"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=400" alt="Poker"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1596838132731-3301c3fd4317?w=400" alt="Poker"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1518990031154-99b76e1e9371?w=400" alt="Poker"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="schedule" class="page">
+        <div style="background: linear-gradient(to right, #7f1d1d, #000); padding: 64px 24px;">
+            <div class="container">
+                <h2 style="font-size: 48px; font-weight: bold; text-transform: uppercase;">Tournament Schedule</h2>
+            </div>
+        </div>
+        <div style="padding: 48px 24px; min-height: 400px;">
+            <div class="container">
+                <div class="event-card">
+                    <h3>Lake Erie Poker Classic Main Event</h3>
+                    <p style="color: #9ca3af; font-size: 18px; margin: 16px 0;">March 15, 2026 • 12:00 PM • $1,100</p>
+                    <p>Starting stack: 30,000 chips • Level length: 60 minutes • Late registration: 8 levels</p>
+                </div>
+                <div class="event-card" style="margin-top: 24px;">
+                    <h3>Mystery Bounty Tournament</h3>
+                    <p style="color: #9ca3af; font-size: 18px; margin: 16px 0;">March 16, 2026 • 2:00 PM • $550</p>
+                    <p>Starting stack: 25,000 chips • Level length: 40 minutes • Late registration: 6 levels</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="events" class="page">
+        <div style="background: linear-gradient(to right, #7f1d1d, #000); padding: 64px 24px;">
+            <div class="container">
+                <h2 style="font-size: 48px; font-weight: bold; text-transform: uppercase;">Events</h2>
+            </div>
+        </div>
+        <div style="padding: 48px 24px;">
+            <div class="container">
+                <div class="event-card">
+                    <h3>Lake Erie Poker Classic Main Event</h3>
+                    <p style="color: #9ca3af; margin: 16px 0;">March 15, 2026 at 12:00 PM • $1,100</p>
+                    <p style="margin-bottom: 24px;">The flagship tournament of the Lake Erie Poker Classic series. Join us for three days of premium tournament poker action.</p>
+                    <div style="background: #000; border-left: 4px solid #dc2626; padding: 24px;">
+                        <p style="color: #9ca3af;">📍 Venue details to be announced</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="info" class="page">
+        <div style="background: linear-gradient(to right, #7f1d1d, #000); padding: 64px 24px;">
+            <div class="container">
+                <h2 style="font-size: 48px; font-weight: bold; text-transform: uppercase;">Player Information</h2>
+            </div>
+        </div>
+        <div style="padding: 48px 24px;">
+            <div class="container">
+                <div class="event-card" style="margin-bottom: 32px;">
+                    <h3>Tournament Rules</h3>
+                    <p>Detailed tournament rules and structure information will be provided prior to each event. All tournaments follow industry-standard poker tournament rules.</p>
+                </div>
+                <div class="event-card" style="margin-bottom: 32px;">
+                    <h3>Eligibility Requirements</h3>
+                    <p>Players must be 21 years of age or older to participate. Valid government-issued photo identification is required for registration and prize collection.</p>
+                </div>
+                <div style="background: #450a0a; border: 2px solid #7f1d1d; padding: 40px;">
+                    <h3 style="color: #fff; font-size: 28px; margin-bottom: 24px;">RESPONSIBLE GAMING</h3>
+                    <p style="margin-bottom: 24px; font-size: 18px;">We are committed to responsible gaming. If you or someone you know has a gambling problem, help is available.</p>
+                    <p style="font-size: 18px;">Ohio Problem Gambling Helpline:</p>
+                    <p style="font-size: 32px; font-weight: bold; margin: 8px 0 24px 0;">1-800-589-9966</p>
+                    <p style="font-size: 16px;">National Council on Problem Gambling:</p>
+                    <p style="font-size: 24px; font-weight: bold; margin-top: 8px;">1-800-522-4700</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="page">
+        <div style="background: linear-gradient(to right, #7f1d1d, #000); padding: 64px 24px;">
+            <div class="container">
+                <h2 style="font-size: 48px; font-weight: bold; text-transform: uppercase;">Contact Us</h2>
+            </div>
+        </div>
+        <div style="padding: 48px 24px;">
+            <div class="container">
+                <div class="event-card">
+                    <h3>Get in Touch</h3>
+                    <p>For inquiries about the Lake Erie Poker Classic, please reach out to us. We typically respond within 24-48 hours.</p>
+                    <p style="color: #9ca3af; margin-top: 24px;">More contact options coming soon.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Lake Erie Poker Classic</h3>
+                    <p>A premier tournament poker series on Lake Erie</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p style="cursor: pointer;" onclick="showPage('schedule')">Schedule</p>
+                    <p style="cursor: pointer; margin-top: 8px;" onclick="showPage('events')">Events</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Responsible Gaming</h3>
+                    <p style="font-size: 12px; margin-bottom: 8px;">Problem Gambling Helpline</p>
+                    <p style="font-size: 18px; font-weight: bold; color: #fff;">1-800-589-9966</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p style="margin-bottom: 16px;">Must be 21 or older to gamble or participate in promotions. Lake Erie Poker Classic tournaments are conducted in accordance with Ohio gaming regulations. Please play responsibly.</p>
+                <p>© 2026 Lake Erie Poker Classic. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            const btn = document.getElementById('nav-' + pageId);
+            if (btn) btn.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
